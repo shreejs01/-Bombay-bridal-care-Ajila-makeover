@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Facial & Skin Care — MyBeautyParlour</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('asstes/WhatsApp Image 2025-08-11 at 9.28.11 PM.jpeg');
+   background-color: rgba(0, 0, 0, 0.5); /* black with 50% transparency */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.wa-float {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;               /* change to bottom: 80px if you want above footer */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.wa-float a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(37,211,102,0.18);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.wa-float a:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(37,211,102,0.25); }
+
+.wa-float .fa-whatsapp { font-size: 20px; }
+
+/* small text hidden on very small screens to keep a round button look */
+.wa-text { font-size: 14px; }
+@media(max-width:420px){
+  .wa-float a { padding: 10px; border-radius: 50%; }
+  .wa-text { display: none; }
+}
+
+  /* Custom header color */
+.navbar {
+  background: linear-gradient(90deg, #1f024ecd, #f9a826, #ff0066, #1f024ecd); /* pink → orange → pink */
+  color: white !important;
+}
+
+
+.navbar .nav-link,
+.navbar-brand {
+  color: white !important;
+}
+
+.navbar .nav-link:hover {
+  color: gold !important;
+}
+
+    .navbar-nav .dropdown:hover .dropdown-menu {
+      display: block;
+      margin-top: 0;
+    }
+
+    .dropdown-menu {
+  position: relative;
+  background: linear-gradient(to right, #1f024ecd, #bfe9ff);
+  overflow: hidden;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.diagonal-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dropdown-menu * {
+  position: relative;
+  z-index: 1;
+}
+
+
+  .dropdown-item {
+    color: white !important;
+    font-weight: bold;
+  }
+
+  .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: gold !important;
+  }
+  
+    /* Search Box Container */
+    .search-container {
+      max-width: 400px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      font-size: 16px;
+      border: 1px solid #1a1313;
+      border-radius: 25px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-container input[type="text"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .search-container .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    /* Card below search */
+    .search-card {
+      max-width: 400px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .search-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .search-card-body {
+      padding: 15px;
+      background-color: #fff;
+    }
+
+    .search-card-body h5 {
+      margin: 0;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .search-image-row img {
+  border: 1px solid #ddd;
+  padding: 5px;
+  background: #fff;
+  transition: transform 0.3s ease;
+}
+
+.search-image-row img:hover {
+  transform: scale(1.05);
+  border-color: #007bff;
+  cursor: pointer;
+}
+   .container-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+    gap: 40px;
+  }
+
+  /* Left and right side container holding 2 images side by side */
+/* Scrollable Image Row Next to Video */
+/* Image Gallery */
+.image-gallery {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  padding: 30px 0;
+  width: 90vw;
+  max-width: 900px;
+  margin: 150px auto 40px;
+}
+
+.image-gallery img {
+  width: 700px;
+  height: 500px;
+  object-fit: contain;   /* ✅ This shows the full image */
+  background-color: #000; /* Optional: fills space if image doesn't fill box */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.05);
+}
+
+
+
+
+.container-flex {
+  display: flex;
+  justify-content: center;  /* ensures center alignment */
+  align-items: flex-start;  /* don't stretch vertically */
+  margin: 40px auto;
+  gap: 40px;
+  max-width: 1200px;         /* optional: keep layout tight */
+}
+
+  /* Center video card */
+ .carousel-container {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  height: 60vh;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-card {
+  width: 450px;
+  height: 450px;
+  border: 6px solid gold; /* Thicker gold outline */
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+   margin-left: 40px;
+}
+
+.video-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+
+.controls {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.controls button {
+  pointer-events: all;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.controls button:hover {
+  background: gold;
+  color: black;
+}
+.square-card {
+  width: 100%;
+  aspect-ratio: 1; /* Keeps card square */
+  background: rgba(0, 0, 0, 0.813); /* Black with transparency */
+  border: 2px solid gold; /* Optional: gold border to pop */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(122, 38, 38, 0.839);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+
+
+.square-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(214, 51, 132, 0.4);
+}
+.square-card img {
+  width: 120px;                 /* Increased icon size */
+  height: 120px;
+  border: 4px solid gold;      /* Thicker gold border */
+  border-radius: 50%;          /* Makes it circular */
+  padding: 10px;               /* Gap between image and border */
+  background-color: white;     /* White background inside circle */
+  margin-bottom: 40px;         /* Gap between icon and text */
+  object-fit: contain;
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4); /* Optional: subtle gold glow */
+  transition: transform 0.3s ease;
+}
+
+.square-card h5 {
+  font-family: cursive;
+  color: gold; /* Keep it visible on dark background */
+  font-size: 1.25rem; /* Increase font size (1rem → 1.25rem or more) */
+  font-weight: bold;
+  margin: 0;
+}
+
+.hw-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid gold;
+  border-radius: 15px;
+  padding: 40px 30px; /* ⬆️ More padding for bigger look */
+  color: white;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  min-height: 300px; /* ⬆️ Increased card height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hw-card img.hw-icon {
+  mix-blend-mode: multiply;
+}
+
+.hw-icon {
+  width: 150px; /* ⬆️ Larger icon */
+  height: 150px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  padding: 10px;
+  animation: pulse 2s infinite;
+  object-fit: contain;
+  background-color: transparent;
+}
+
+.how-work-section .hw-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(214, 51, 132, 0.4);
+}
+
+.how-work-section h5 {
+  font-family: cursive;
+  color: gold;
+  font-size: 1.4rem; /* ⬆️ Slightly bigger text */
+  margin-bottom: 12px;
+}
+
+.how-work-section p {
+  font-size: 1.05rem; /* ⬆️ Paragraph text size */
+  margin: 0;
+}
+.bridal-options-section .section-title {
+  color: #d63384;
+  font-family: cursive;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.option-card {
+  background: rgba(0, 0, 0, 0.703);
+  border: 3px solid gold;
+  border-radius: 24px;
+  padding: 60px; /* ⬆️ Extra padding */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 450px; /* ⬆️ Taller card */
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.686);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.option-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 24px rgba(214, 51, 132, 0.4);
+}
+
+.text-content h5 {
+  font-family: cursive;
+  color: gold;
+  font-size: 2.2rem; /* ⬆️ Bigger heading */
+  margin-bottom: 15px;
+}
+
+.text-content p {
+  font-size: 1.3rem; /* ⬆️ Bigger paragraph */
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.image-content img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-left: auto;  /* Push image to the right */
+  margin-right: 0;    /* No right margin */
+  display: block;
+}
+.option-card {
+  padding-right: 0 !important; /* Remove any right padding forcibly */
+  margin-right: 0 !important;  /* Remove any right margin forcibly */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image-content {
+  margin-left: auto !important; /* Push image fully right */
+  padding: 0 !important;         /* Remove padding */
+}
+
+.image-content img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 0 !important;   /* No right margin */
+  display: block;
+}
+
+
+.quote-btn {
+  position: relative;
+  background: gold;
+  color: black;
+  padding: 10px 22px; /* slightly reduced padding */
+  font-size: 1rem;     /* ⬅️ Font size reduced */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden; /* Keeps arrow inside */
+}
+
+.quote-btn:after {
+  content: '➔';
+  position: absolute;
+  right: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease, right 0.3s ease;
+}
+
+.quote-btn:hover:after {
+  opacity: 1;
+  right: 8px;
+}
+  footer.social-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 0;
+    background: transparent; /* fully transparent */
+  }
+
+  footer.social-row a {
+    color: gold;
+    font-size: 28px;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+
+  footer.social-row a:hover {
+    transform: scale(1.2);
+  }
+   :root{--gold:#d4a017;--pink:#d63384}
+    body{font-family:Arial, sans-serif;background:linear-gradient(180deg,rgba(0,0,0,0.55),rgba(0,0,0,0.6)), url('assets/bg.jpg') center/cover no-repeat;margin:0;color:#fff}
+    .top-search{backdrop-filter: blur(4px);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);padding:18px;border-radius:12px;margin:18px}
+    .location-input{display:flex;align-items:center;gap:8px}
+    .location-input input{background:transparent;border:0;color:#fff;outline:none}
+    .filters .form-control{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#fff}
+    .filters .btn-search{background:var(--gold);color:#000;font-weight:700}
+
+    /* Listing card */
+    .listing{background:rgba(0,0,0,0.7);border:2px solid rgba(212,49,132,0.18);border-radius:12px;padding:18px;margin-bottom:18px;display:flex;gap:18px}
+    .listing img{width:160px;height:120px;object-fit:cover;border-radius:8px;border:3px solid var(--gold)}
+    .listing h5{color:var(--pink);margin:0 0 6px 0}
+    .badges span{display:inline-block;background:rgba(255,255,255,0.04);color:#fff;padding:6px 8px;border-radius:8px;margin-right:6px;font-size:0.85rem}
+    .rating{color:gold;font-weight:700}
+
+    .whatsapp-actions{display:flex;gap:8px;align-items:center}
+    .btn-whatsapp{background:#25D366;color:#fff;border-radius:8px;padding:8px 12px;border:0}
+    .btn-show-number{background:transparent;border:1px solid rgba(255,255,255,0.12);color:#fff;padding:8px 10px;border-radius:8px}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;overflow:hidden;padding:12px}
+    .gallery img{width:100%;height:120px;object-fit:cover;border-radius:8px;border:2px solid rgba(255,255,255,0.04);cursor:pointer}
+
+    /* Floating enquiry square */
+    .enquiry-box{position:fixed;right:18px;bottom:18px;width:260px;background:rgba(0,0,0,0.85);border:2px solid var(--gold);padding:12px;border-radius:10px;z-index:999}
+    .enquiry-box h6{color:var(--pink);margin-bottom:8px}
+    .enquiry-box input,.enquiry-box textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff;padding:8px;border-radius:6px;width:100%;margin-bottom:8px}
+    .enquiry-box .btn-send{background:var(--gold);color:#000;width:100%;font-weight:700}
+
+    /* Responsive */
+    @media(max-width:991px){.gallery{grid-template-columns:repeat(2,1fr)}.listing{flex-direction:column;align-items:flex-start}.listing img{width:100%;height:200px}}
+
+  </style>
+</head>
+<body>
+    <div class="wa-float">
+  <a href="https://wa.me/919876543210" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+    <span class="wa-text">Chat</span>
+  </a>
+</div>
+  <!-- Navigation Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand font-weight-bold" href="#">My Beauty Parlour</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navMenu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ml-auto">
+        <!-- Home -->
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+
+        <!-- Services Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="servicesDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Services
+          </a>
+          <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <a class="dropdown-item" href="offecrs.html">Offers</a>
+            <a class="dropdown-item" href="ad.html">Advertisement</a>
+            <a class="dropdown-item" href="salon.html">Home Service Salon</a>
+          </div>
+        </li>
+
+        <!-- Beautician Category Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="beauticianDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Beautician Category
+          </a>
+          <div class="dropdown-menu" aria-labelledby="beauticianDropdown">
+            <a class="dropdown-item" href="beauty.html">Beauty Academy</a>
+            <a class="dropdown-item" href="facial.html">Facial & Skin Care Salon</a>
+            <a class="dropdown-item" href="artist.html">Freelance Beauty Artist</a>
+            <a class="dropdown-item" href="hair.html">Hair Professional</a>
+            <a class="dropdown-item" href="makeup.html">Makeup Studio</a>
+            <a class="dropdown-item" href="mehandi.html">Mehandi Artist</a>
+            <a class="dropdown-item" href="tattoo.html">Tattoo Professional</a>
+          </div>
+        </li>
+
+        <!-- Event Category Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="eventDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Event Category
+          </a>
+           <div class="dropdown-menu" aria-labelledby="eventDropdown">
+            <a class="dropdown-item" href="index.html">Event Gallery</a>
+            <a class="dropdown-item" href="index.html">Upcoming Training</a>
+          </div>
+        </li>
+
+        <!-- Contact -->
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<div class="container-fluid">
+    <!-- Top search / location */ -->
+    <div class="top-search d-flex flex-column flex-md-row align-items-center justify-content-between">
+      <div class="d-flex align-items-center" style="gap:18px;flex:1;min-width:300px">
+        <div class="location-input" style="min-width:220px">
+          <i class="fa-solid fa-location-dot" style="color:var(--gold);font-size:20px"></i>
+          <input id="locationInput" type="text" placeholder="Haldwani, Uttarakhand" value="Haldwani, Uttarakhand" aria-label="location">
+        </div>
+
+        <div class="search-bar flex-grow-1 d-flex align-items-center" style="background:rgba(255,255,255,0.02);padding:8px;border-radius:8px">
+          <input id="mainSearch" type="text" class="form-control" placeholder="Search for salons, services or artists" style="background:transparent;border:0;color:#fff;">
+          <button id="doSearch" class="btn btn-search ml-2">Search <i class="fa fa-search" style="margin-left:6px"></i></button>
+        </div>
+      </div>
+
+      <div class="filters d-flex align-items-center mt-3 mt-md-0" style="gap:10px">
+        <!-- 6 dropdown filters -->
+        <select id="filter1" class="form-control">
+          <option value="">All Services</option>
+          <option>Skin care services</option>
+          <option>Hair services</option>
+          <option>Makeup services</option>
+        </select>
+        <select id="filter2" class="form-control">
+          <option>Ratings</option>
+          <option>4★ & above</option>
+          <option>3★ & above</option>
+        </select>
+        <select id="filter3" class="form-control">
+          <option>Price</option>
+          <option>₹</option>
+          <option>₹₹</option>
+          <option>₹₹₹</option>
+        </select>
+        <select id="filter4" class="form-control">
+          <option>Home Service</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+        <select id="filter5" class="form-control">
+          <option>Sort</option>
+          <option>Nearest</option>
+          <option>Popular</option>
+        </select>
+        <select id="filter6" class="form-control">
+          <option>Distance</option>
+          <option>Within 2 km</option>
+          <option>Within 5 km</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Results + left gallery area -->
+    <div class="row mt-4" style="gap:18px">
+      <div class="col-lg-8">
+        <!-- Single listing (example) -->
+       <!-- Card Template -->
+    <div class="listing">
+      <img src="asstes/e1d164db-6105-4689-bf82-3a13426b2bb2.jpg" alt="New Ridima Beauty Parlour">
+      <div style="flex:1">
+        <h5>Reception</h5>
+        <div class="d-flex align-items-center" style="justify-content:space-between">
+          <div>
+            <div class="rating">No Ratings</div>
+            <div style="font-size:0.9rem;margin-top:6px;color:#ddd">Near Devalchaur Chauraha, Haldwani, Uttarakhand, India</div>
+          </div>
+          <div class="whatsapp-actions">
+            <button class="btn-whatsapp" id="waBtn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+            <button class="btn-show-number" id="showNumberBtn">Show Number</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Duplicate 9 more times -->
+    <div class="listing"> <img src="asstes/81a80179-23ef-4486-9b15-6eec0bd3ee75.jpg" alt="New Ridima Beauty Parlour"> <div style="flex:1"> <h5>Beauty Parlour </h5> <div class="d-flex align-items-center" style="justify-content:space-between"> <div> <div class="rating">No Ratings</div> <div style="font-size:0.9rem;margin-top:6px;color:#ddd">Near Devalchaur Chauraha, Haldwani, Uttarakhand, India</div> </div> <div class="whatsapp-actions"> <button class="btn-whatsapp" id="waBtn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button> <button class="btn-show-number" id="showNumberBtn">Show Number</button> </div> </div> </div> </div>
+    <div class="listing"> <img src="asstes/3c8233c9-bd8e-433a-9e4a-6889f5c1e6fd.jpg" alt="New Ridima Beauty Parlour"> <div style="flex:1"> <h5>Heaven Beauty And Spa Salon</h5> <div class="d-flex align-items-center" style="justify-content:space-between"> <div> <div class="rating">No Ratings</div> <div style="font-size:0.9rem;margin-top:6px;color:#ddd">Near Devalchaur Chauraha, Haldwani, Uttarakhand, India</div> </div> <div class="whatsapp-actions"> <button class="btn-whatsapp" id="waBtn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button> <button class="btn-show-number" id="showNumberBtn">Show Number</button> </div> </div> </div> </div>
+    <div class="listing"> <img src="asstes/4f666a6a-4675-47b5-8f2c-ce876551a57e.jpg" alt="New Ridima Beauty Parlour"> <div style="flex:1"> <h5>Golden Comb Unisex Salon</h5> <div class="d-flex align-items-center" style="justify-content:space-between"> <div> <div class="rating">No Ratings</div> <div style="font-size:0.9rem;margin-top:6px;color:#ddd">Near Devalchaur Chauraha, Haldwani, Uttarakhand, India</div> </div> <div class="whatsapp-actions"> <button class="btn-whatsapp" id="waBtn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button> <button class="btn-show-number" id="showNumberBtn">Show Number</button> </div> </div> </div> </div>
+    <div class="listing"> <img src="asstes/279fa199-097b-4b19-8386-cc2677b8a8f7.jpg" alt="New Ridima Beauty Parlour"> <div style="flex:1"> <h5>Big Boss Hair Cut Salon</h5> <div class="d-flex align-items-center" style="justify-content:space-between"> <div> <div class="rating">No Ratings</div> <div style="font-size:0.9rem;margin-top:6px;color:#ddd">Near Devalchaur Chauraha, Haldwani, Uttarakhand, India</div> </div> <div class="whatsapp-actions"> <button class="btn-whatsapp" id="waBtn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button> <button class="btn-show-number" id="showNumberBtn">Show Number</button> </div> </div> </div> </div>
+    <div class="listing"> <img src="asstes/312a2c9f-871a-4668-9126-08eb1a365ff6.jpg" alt="New Ridima Beauty Parlour"> <div style="flex:1"> <h5>Naval salon</h5> <div class="d-flex align-items-center" style="justify-content:space-between"> <div> <div class="rating">No Ratings</div> <div style="font-size:0.9rem;margin-top:6px;color:#ddd">Near Devalchaur Chauraha, Haldwani, Uttarakhand, India</div> </div> <div class="whatsapp-actions"> <button class="btn-whatsapp" id="waBtn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button> <button class="btn-show-number" id="showNumberBtn">Show Number</button> </div> </div> </div> </div>
+  </div>
+</div>
+
+            <div class="mt-3 badges">
+              <span>Skin care services</span>
+              <span>Hair services</span>
+              <span>Makeup services</span>
+              <span>Manicure & pedicure services</span>
+              <span>Massage services</span>
+            </div>
+
+            <div class="mt-3 d-flex align-items-center" style="gap:12px">
+              <a class="btn btn-outline-light" href="#">View Gallery</a>
+              <a class="btn btn-outline-light" href="#">Book Now</a>
+              <a class="btn btn-outline-light" href="#">Directions <i class="fa-solid fa-location-arrow"></i></a>
+            </div>
+
+            <div id="phoneArea" class="mt-3" style="display:none">
+              <strong>Phone:</strong> <span id="phoneNumber">+91 98765 43210</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Repeatable list placeholder (you can loop this server-side) -->
+        <div id="otherResults">
+          <!-- Additional listing cards generated by JS or server can go here -->
+        </div>
+
+       
+
+      <div class="col-lg-4">
+        <!-- Gallery of 10 images -->
+        <div class="gallery">
+          <img src="https://studieo7.in/wp-content/uploads/2022/12/girl-111.png" alt="g1">
+          <img src="https://www.saybridalstudio.in/assets/images/bridal/south-indian-bridal.webp" alt="g2">
+          <img src="https://png.pngtree.com/thumb_back/fh260/background/20240522/pngtree-traditional-indian-pakistani-bridal-with-heavy-makeup-and-jewelry-image_15809099.jpg" alt="g3">
+          <img src="https://mybeautyparlour.com/storage/dPltjDyN40ggAkgL.jpg" alt="g4">
+          <img src="https://mybeautyparlour.com/storage/TKctpALaaWFWiTWo.jpg" alt="g5">
+          <img src="https://mybeautyparlour.com/storage/8bqWut9yn49EdKbK.jpg" alt="g6">
+          <img src="https://mybeautyparlour.com/storage/gSNXwJpEx5H3zGY2.jpg" alt="g7">
+          <img src="https://mybeautyparlour.com/storage/6PqJ5WTpUC6A8U3Q.jpg" alt="g8">
+          <img src="https://mybeautyparlour.com/storage/VSrQGiyQZqSkgFpp.jpg" alt="g9">
+          <img src="https://mybeautyparlour.com/storage/5Ojgco7kOia4pnrY.jpg" alt="g10">
+        </div>
+
+        <!-- Small map placeholder (could embed Google Maps iframe) -->
+        <div class="mt-3 p-3" style="background:rgba(255,255,255,0.03);border-radius:8px">
+          <h6 style="color:var(--pink)">Location</h6>
+          <div style="height:180px;background:linear-gradient(90deg,rgba(0,0,0,0.4),rgba(0,0,0,0.6));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#ddd">Map Placeholder (embed Google Maps here)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- floating enquiry box -->
+  <div class="enquiry-box" id="enquiryBox">
+    <h6>Send Enquiry</h6>
+    <input id="enqName" placeholder="Your name">
+    <input id="enqPhone" placeholder="Phone / WhatsApp">
+    <textarea id="enqMsg" rows="3" placeholder="Message (service, date, time)"></textarea>
+    <button id="sendEnq" class="btn btn-send">Send</button>
+    <div id="enqResult" style="margin-top:8px;font-size:0.9rem;color:#bfe9ff;display:none"></div>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Show phone when clicking Show Number
+    document.getElementById('showNumberBtn').addEventListener('click', function(){
+      const area = document.getElementById('phoneArea');
+      area.style.display = area.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // WhatsApp button - open chat with prefilled message
+    document.getElementById('waBtn').addEventListener('click', function(){
+      const phone = '+919876543210'; // change to real number
+      const text = encodeURIComponent('Hi, I saw your listing on MyBeautyParlour and would like details.');
+      window.open('https://wa.me/' + phone.replace(/\+|\s|-/g,'') + '?text=' + text, '_blank');
+    });
+
+    // Gallery click to preview
+    document.querySelectorAll('.gallery img').forEach(img=>{
+      img.addEventListener('click', ()=>{
+        const w = window.open('','_blank');
+        w.document.write('<img src="'+img.src+'" style="max-width:100%;height:auto">');
+      })
+    })
+
+    // Simple enquiry handler (demo)
+    document.getElementById('sendEnq').addEventListener('click', function(){
+      const name = document.getElementById('enqName').value.trim();
+      const phone = document.getElementById('enqPhone').value.trim();
+      const msg = document.getElementById('enqMsg').value.trim();
+      const result = document.getElementById('enqResult');
+      if(!name || !phone || !msg){ result.style.display='block'; result.innerText='Please fill all fields'; return; }
+      // In real app: send to server via fetch/AJAX
+      result.style.display='block'; result.innerText='Enquiry sent! Owner will contact you soon.';
+      // clear
+      document.getElementById('enqName').value=''; document.getElementById('enqPhone').value=''; document.getElementById('enqMsg').value='';
+    });
+
+    // Search button stub
+    document.getElementById('doSearch').addEventListener('click', function(){
+      alert('Search clicked — implement filtering to search your database or API');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Beauty Parlour Clone with Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+ body {
+    font-family: Arial, sans-serif;
+    background: rgba(0, 0, 0, 0.5); /* Black transparent */
+    background-attachment: fixed;
+  }
+
+  /* Custom header color */
+.navbar {
+  background: linear-gradient(90deg, #1f024ecd, #f9a826, #ff0066, #1f024ecd); /* pink → orange → pink */
+  color: white !important;
+}
+
+
+.navbar .nav-link,
+.navbar-brand {
+  color: white !important;
+}
+
+.navbar .nav-link:hover {
+  color: gold !important;
+}
+
+    .navbar-nav .dropdown:hover .dropdown-menu {
+      display: block;
+      margin-top: 0;
+    }
+
+    .dropdown-menu {
+  position: relative;
+  background: linear-gradient(to right, #1f024ecd, #bfe9ff);
+  overflow: hidden;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.diagonal-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dropdown-menu * {
+  position: relative;
+  z-index: 1;
+}
+
+
+  .dropdown-item {
+    color: white !important;
+    font-weight: bold;
+  }
+
+  .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: gold !important;
+  }
+  
+    /* Search Box Container */
+    .search-container {
+      max-width: 400px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      font-size: 16px;
+      border: 1px solid #1a1313;
+      border-radius: 25px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-container input[type="text"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .search-container .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    /* Card below search */
+    .search-card {
+      max-width: 400px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .search-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .search-card-body {
+      padding: 15px;
+      background-color: #fff;
+    }
+
+    .search-card-body h5 {
+      margin: 0;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .search-image-row img {
+  border: 1px solid #ddd;
+  padding: 5px;
+  background: #fff;
+  transition: transform 0.3s ease;
+}
+
+.search-image-row img:hover {
+  transform: scale(1.05);
+  border-color: #007bff;
+  cursor: pointer;
+}
+   .container-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+    gap: 40px;
+  }
+
+  /* Left and right side container holding 2 images side by side */
+/* Scrollable Image Row Next to Video */
+/* Image Gallery */
+.image-gallery {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  padding: 30px 0;
+  width: 90vw;
+  max-width: 900px;
+  margin: 150px auto 40px;
+}
+
+.image-gallery img {
+  width: 700px;
+  height: 500px;
+  object-fit: contain;   /* ✅ This shows the full image */
+  background-color: #000; /* Optional: fills space if image doesn't fill box */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.05);
+}
+
+
+
+
+.container-flex {
+  display: flex;
+  justify-content: center;  /* ensures center alignment */
+  align-items: flex-start;  /* don't stretch vertically */
+  margin: 40px auto;
+  gap: 40px;
+  max-width: 1200px;         /* optional: keep layout tight */
+}
+
+  /* Center video card */
+ .carousel-container {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  height: 60vh;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-card {
+  width: 450px;
+  height: 450px;
+  border: 6px solid gold; /* Thicker gold outline */
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+   margin-left: 40px;
+}
+
+.video-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+
+.controls {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.controls button {
+  pointer-events: all;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.controls button:hover {
+  background: gold;
+  color: black;
+}
+.square-card {
+  width: 100%;
+  aspect-ratio: 1; /* Keeps card square */
+  background: rgba(0, 0, 0, 0.813); /* Black with transparency */
+  border: 2px solid gold; /* Optional: gold border to pop */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(122, 38, 38, 0.839);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+
+
+.square-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(214, 51, 132, 0.4);
+}
+.square-card img {
+  width: 120px;                 /* Increased icon size */
+  height: 120px;
+  border: 4px solid gold;      /* Thicker gold border */
+  border-radius: 50%;          /* Makes it circular */
+  padding: 10px;               /* Gap between image and border */
+  background-color: white;     /* White background inside circle */
+  margin-bottom: 40px;         /* Gap between icon and text */
+  object-fit: contain;
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4); /* Optional: subtle gold glow */
+  transition: transform 0.3s ease;
+}
+
+.square-card h5 {
+  font-family: cursive;
+  color: gold; /* Keep it visible on dark background */
+  font-size: 1.25rem; /* Increase font size (1rem → 1.25rem or more) */
+  font-weight: bold;
+  margin: 0;
+}
+
+.hw-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid gold;
+  border-radius: 15px;
+  padding: 40px 30px; /* ⬆️ More padding for bigger look */
+  color: white;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  min-height: 300px; /* ⬆️ Increased card height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hw-card img.hw-icon {
+  mix-blend-mode: multiply;
+}
+
+.hw-icon {
+  width: 150px; /* ⬆️ Larger icon */
+  height: 150px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  padding: 10px;
+  animation: pulse 2s infinite;
+  object-fit: contain;
+  background-color: transparent;
+}
+
+.how-work-section .hw-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(214, 51, 132, 0.4);
+}
+
+.how-work-section h5 {
+  font-family: cursive;
+  color: gold;
+  font-size: 1.4rem; /* ⬆️ Slightly bigger text */
+  margin-bottom: 12px;
+}
+
+.how-work-section p {
+  font-size: 1.05rem; /* ⬆️ Paragraph text size */
+  margin: 0;
+}
+.bridal-options-section .section-title {
+  color: #d63384;
+  font-family: cursive;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.option-card {
+  background: rgba(0, 0, 0, 0.703);
+  border: 3px solid gold;
+  border-radius: 24px;
+  padding: 60px; /* ⬆️ Extra padding */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 450px; /* ⬆️ Taller card */
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.686);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.option-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 24px rgba(214, 51, 132, 0.4);
+}
+
+.text-content h5 {
+  font-family: cursive;
+  color: gold;
+  font-size: 2.2rem; /* ⬆️ Bigger heading */
+  margin-bottom: 15px;
+}
+
+.text-content p {
+  font-size: 1.3rem; /* ⬆️ Bigger paragraph */
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.image-content img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-left: auto;  /* Push image to the right */
+  margin-right: 0;    /* No right margin */
+  display: block;
+}
+.option-card {
+  padding-right: 0 !important; /* Remove any right padding forcibly */
+  margin-right: 0 !important;  /* Remove any right margin forcibly */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image-content {
+  margin-left: auto !important; /* Push image fully right */
+  padding: 0 !important;         /* Remove padding */
+}
+
+.image-content img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 0 !important;   /* No right margin */
+  display: block;
+}
+
+
+.quote-btn {
+  position: relative;
+  background: gold;
+  color: black;
+  padding: 10px 22px; /* slightly reduced padding */
+  font-size: 1rem;     /* ⬅️ Font size reduced */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden; /* Keeps arrow inside */
+}
+
+.quote-btn:after {
+  content: '➔';
+  position: absolute;
+  right: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease, right 0.3s ease;
+}
+
+.quote-btn:hover:after {
+  opacity: 1;
+  right: 8px;
+}
+  footer.social-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 0;
+    background: transparent; /* fully transparent */
+  }
+
+  footer.social-row a {
+    color: gold;
+    font-size: 28px;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+
+  footer.social-row a:hover {
+    transform: scale(1.2);
+  }
+    body { font-family: Arial, sans-serif; background: #fafafa; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    .category-row { display: flex; overflow-x: auto; padding: 15px; background: #fff; }
+    .category-item { flex: 0 0 auto; margin-right: 10px; text-align: center; cursor: pointer; }
+    .category-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; }
+    .filters { display: flex; flex-wrap: wrap; background: #fff; padding: 15px; gap: 10px; margin-top: 10px; }
+    .salon-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    .salon-card img { width: 100%; height: 200px; object-fit: cover; }
+    .salon-info { padding: 15px; }
+    .salon-info h5 { font-size: 18px; margin-bottom: 10px; color: #d63384; }
+    .status.closed { color: red; }
+    .status.open { color: green; }
+    .appointment-form { background: #fff; padding: 20px; margin-top: 30px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    @media(max-width:768px) { .filters { flex-direction: column; } }
+   .page-header {
+      background: linear-gradient(90deg, #1f024ecd, #f9a826, #ff0066);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+   .category-row {
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .category-item {
+      flex: 0 0 auto;
+      background: #f0f0f0;
+      padding: 8px 15px;
+      margin-right: 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .category-item:hover { background: #ffc107; }
+    .filters {
+      background: #fff;
+      padding: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .salon-card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .salon-card img { width: 100%; height: 200px; object-fit: cover; }
+    .salon-info { padding: 15px; }
+    .salon-info h5 { margin-bottom: 10px; font-size: 18px; }
+    .status { font-weight: bold; color: red; }
+    .appointment-form {
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      margin-top: 30px;
+      border-radius: 8px;
+    }
+    @media(max-width:768px){
+      .filters { flex-direction: column; }
+    }
+  </style>
+</head>
+<body class="container">
+
+  <!-- Top Bar with Title + Search -->
+  <div class="top-bar">
+    <h2>Home Service Salon</h2>
+    <input type="text" class="form-control w-25" placeholder="Search salons...">
+  </div>
+  <!-- Navigation Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand font-weight-bold" href="#">My Beauty Parlour</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navMenu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ml-auto">
+        <!-- Home -->
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+
+        <!-- Services Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="servicesDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Services
+          </a>
+          <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <a class="dropdown-item" href="offecrs.html">Offers</a>
+            <a class="dropdown-item" href="ad.html">Advertisement</a>
+            <a class="dropdown-item" href="salon.html">Home Service Salon</a>
+          </div>
+        </li>
+
+        <!-- Beautician Category Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="beauticianDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Beautician Category
+          </a>
+          <div class="dropdown-menu" aria-labelledby="beauticianDropdown">
+            <a class="dropdown-item" href="beauty.html">Beauty Academy</a>
+            <a class="dropdown-item" href="facial.html">Facial & Skin Care Salon</a>
+            <a class="dropdown-item" href="artist.html">Freelance Beauty Artist</a>
+            <a class="dropdown-item" href="hair.html">Hair Professional</a>
+            <a class="dropdown-item" href="makeup.html">Makeup Studio</a>
+            <a class="dropdown-item" href="mehandi.html">Mehandi Artist</a>
+            <a class="dropdown-item" href="tattoo.html">Tattoo Professional</a>
+          </div>
+        </li>
+
+        <!-- Event Category Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="eventDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Event Category
+          </a>
+         <div class="dropdown-menu" aria-labelledby="eventDropdown">
+            <a class="dropdown-item" href="index.html">Event Gallery</a>
+            <a class="dropdown-item" href="index.html">Upcoming Training</a>
+          </div>
+        </li>
+
+       <!-- Contact -->
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+ <div class="page-header">
+    <h1>Home Service Salon</h1>
+    <p>Browse and book top beauty services at your doorstep</p>
+  </div>
+
+  
+<!-- Select Your Category -->
+<div class="category-row">
+  <div class="category-item">Beauty Academy</div>
+  <div class="category-item">Makeup Studio</div>
+  <div class="category-item">Freelance Artist</div>
+  <div class="category-item">Spa Center</div>
+  <div class="category-item">Hair Stylist</div>
+  <div class="category-item">Nail Art</div>
+</div>
+
+<!-- Filters -->
+<div class="filters container">
+  <select class="form-control">
+    <option>All Sub-Categories</option>
+    <option>Bridal</option>
+    <option>Hair</option>
+    <option>Makeup</option>
+  </select>
+  <select class="form-control">
+    <option>All Gender</option>
+    <option>Men</option>
+    <option>Women</option>
+    <option>Unisex</option>
+  </select>
+  <select class="form-control">
+    <option>All Cities</option>
+    <option>Delhi</option>
+    <option>Mumbai</option>
+    <option>Bangalore</option>
+  </select>
+</div>
+
+<!-- Salon Listings -->
+<div class="container mt-3">
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="salon-card">
+        <img src="https://png.pngtree.com/png-clipart/20240619/original/pngtree-beautiful-girl-png-image_15366913.png" alt="Salon">
+        <div class="salon-info">
+          <h5>FAITH SALON </h5>
+          <p class="status">Closed Now</p>
+          <p>Contact: +91 9876543210</p>
+          <button class="btn btn-warning btn-sm">Make Appointment</button>
+          <button class="btn btn-outline-dark btn-sm">View Profile</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="salon-card">
+        <img src="https://png.pngtree.com/png-clipart/20240619/original/pngtree-beautiful-girl-png-image_15366913.png" alt="Salon">
+        <div class="salon-info">
+          <h5>Glow & Shine</h5>
+          <p class="status" style="color:green;">Open Now</p>
+          <p>Contact: +91 9876543211</p>
+          <button class="btn btn-warning btn-sm">Make Appointment</button>
+          <button class="btn btn-outline-dark btn-sm">View Profile</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="salon-card">
+        <img src="https://png.pngtree.com/png-clipart/20240619/original/pngtree-beautiful-girl-png-image_15366913.png" alt="Salon">
+        <div class="salon-info">
+          <h5>Style Studio</h5>
+          <p class="status">Closed Now</p>
+          <p>Contact: +91 9876543212</p>
+          <button class="btn btn-warning btn-sm">Make Appointment</button>
+          <button class="btn btn-outline-dark btn-sm">View Profile</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="salon-card">
+        <img src="https://png.pngtree.com/png-clipart/20240619/original/pngtree-beautiful-girl-png-image_15366913.png" alt="Salon">
+        <div class="salon-info">
+          <h5>Lincy Studio</h5>
+          <p class="status">Closed Now</p>
+          <p>Contact: +91 9876543212</p>
+          <button class="btn btn-warning btn-sm">Make Appointment</button>
+          <button class="btn btn-outline-dark btn-sm">View Profile</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Appointment Form -->
+<div class="container">
+  <form class="appointment-form">
+    <h4>Book an Appointment</h4>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Your Name">
+    </div>
+    <div class="form-group">
+      <select class="form-control">
+        <option>Select Service</option>
+        <option>Haircut</option>
+        <option>Makeup</option>
+        <option>Bridal Package</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="date" class="form-control">
+    </div>
+    <div class="form-group">
+      <select class="form-control">
+        <option>Select Time</option>
+        <option>10:00 AM</option>
+        <option>12:00 PM</option>
+        <option>3:00 PM</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" placeholder="Additional Details"></textarea>
+    </div>
+    <button type="submit" class="btn btn-warning btn-block">Make Appointment</button>
+  </form>
+</div>
+  <!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

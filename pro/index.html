@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Beauty Parlour Clone with Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('asstes/WhatsApp Image 2025-08-11 at 9.28.11 PM.jpeg');
+   background-color: rgba(0, 0, 0, 0.5); /* black with 50% transparency */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.wa-float {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;               /* change to bottom: 80px if you want above footer */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.wa-float a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(37,211,102,0.18);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.wa-float a:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(37,211,102,0.25); }
+
+.wa-float .fa-whatsapp { font-size: 20px; }
+
+/* small text hidden on very small screens to keep a round button look */
+.wa-text { font-size: 14px; }
+@media(max-width:420px){
+  .wa-float a { padding: 10px; border-radius: 50%; }
+  .wa-text { display: none; }
+}
+
+  /* Custom header color */
+.navbar {
+  background: linear-gradient(90deg, #1f024ecd, #f9a826, #ff0066, #1f024ecd); /* pink → orange → pink */
+  color: white !important;
+}
+
+.navbar-brand-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.navbar-brand-container .navbar-brand {
+  pointer-events: auto; /* Ensures the link remains clickable */
+}
+
+.navbar .nav-link,
+.navbar-brand {
+  color: white !important;
+}
+
+.navbar .nav-link:hover {
+  color: gold !important;
+}
+
+    .navbar-nav .dropdown:hover .dropdown-menu {
+      display: block;
+      margin-top: 0;
+    }
+
+    .dropdown-menu {
+  position: relative;
+  background: linear-gradient(to right, #1f024ecd, #bfe9ff);
+  overflow: hidden;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.diagonal-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dropdown-menu * {
+  position: relative;
+  z-index: 1;
+}
+
+
+  .dropdown-item {
+    color: white !important;
+    font-weight: bold;
+  }
+
+  .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: gold !important;
+  }
+  
+    /* Search Box Container */
+    .search-container {
+      max-width: 400px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      font-size: 16px;
+      border: 1px solid #1a1313;
+      border-radius: 25px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-container input[type="text"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .search-container .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    /* Card below search */
+    .search-card {
+      max-width: 400px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .search-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .search-card-body {
+      padding: 15px;
+      background-color: #fff;
+    }
+
+    .search-card-body h5 {
+      margin: 0;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .search-image-row img {
+  border: 1px solid #ddd;
+  padding: 5px;
+  background: #fff;
+  transition: transform 0.3s ease;
+}
+
+.search-image-row img:hover {
+  transform: scale(1.05);
+  border-color: #007bff;
+  cursor: pointer;
+}
+   .container-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+    gap: 40px;
+  }
+
+  /* Left and right side container holding 2 images side by side */
+/* Scrollable Image Row Next to Video */
+/* Image Gallery */
+.image-gallery {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  padding: 30px 0;
+  width: 90vw;
+  max-width: 900px;
+  margin: 150px auto 40px;
+}
+
+.image-gallery img {
+  width: 700px;
+  height: 500px;
+  object-fit: contain;   /* ✅ This shows the full image */
+  background-color: #000; /* Optional: fills space if image doesn't fill box */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.05);
+}
+
+
+
+
+.container-flex {
+  display: flex;
+  justify-content: center;  /* ensures center alignment */
+  align-items: flex-start;  /* don't stretch vertically */
+  margin: 40px auto;
+  gap: 40px;
+  max-width: 1200px;         /* optional: keep layout tight */
+}
+
+  /* Center video card */
+ .carousel-container {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  height: 60vh;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-card {
+  width: 450px;
+  height: 450px;
+  border: 6px solid gold; /* Thicker gold outline */
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+   margin-left: 40px;
+}
+
+.video-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+
+.controls {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.controls button {
+  pointer-events: all;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.controls button:hover {
+  background: gold;
+  color: black;
+}
+.square-card {
+  width: 100%;
+  aspect-ratio: 1; /* Keeps card square */
+  background: rgba(0, 0, 0, 0.813); /* Black with transparency */
+  border: 2px solid gold; /* Optional: gold border to pop */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(122, 38, 38, 0.839);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+
+
+.square-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(214, 51, 132, 0.4);
+}
+.square-card img {
+  width: 120px;                 /* Increased icon size */
+  height: 120px;
+  border: 4px solid gold;      /* Thicker gold border */
+  border-radius: 50%;          /* Makes it circular */
+  padding: 10px;               /* Gap between image and border */
+  background-color: white;     /* White background inside circle */
+  margin-bottom: 40px;         /* Gap between icon and text */
+  object-fit: contain;
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4); /* Optional: subtle gold glow */
+  transition: transform 0.3s ease;
+}
+
+.square-card h5 {
+  font-family: cursive;
+  color: gold; /* Keep it visible on dark background */
+  font-size: 1.25rem; /* Increase font size (1rem → 1.25rem or more) */
+  font-weight: bold;
+  margin: 0;
+}
+
+.hw-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid gold;
+  border-radius: 15px;
+  padding: 40px 30px; /* ⬆️ More padding for bigger look */
+  color: white;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  min-height: 300px; /* ⬆️ Increased card height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hw-card img.hw-icon {
+  mix-blend-mode: multiply;
+}
+
+.hw-icon {
+  width: 150px; /* ⬆️ Larger icon */
+  height: 150px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  padding: 10px;
+  animation: pulse 2s infinite;
+  object-fit: contain;
+  background-color: transparent;
+}
+
+.how-work-section .hw-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(214, 51, 132, 0.4);
+}
+
+.how-work-section h5 {
+  font-family: cursive;
+  color: gold;
+  font-size: 1.4rem; /* ⬆️ Slightly bigger text */
+  margin-bottom: 12px;
+}
+
+.how-work-section p {
+  font-size: 1.05rem; /* ⬆️ Paragraph text size */
+  margin: 0;
+}
+.bridal-options-section .section-title {
+  color: #d63384;
+  font-family: cursive;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.option-card {
+  background: rgba(0, 0, 0, 0.703);
+  border: 3px solid gold;
+  border-radius: 24px;
+  padding: 60px; /* ⬆️ Extra padding */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 450px; /* ⬆️ Taller card */
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.686);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.option-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 24px rgba(214, 51, 132, 0.4);
+}
+
+.text-content h5 {
+  font-family: cursive;
+  color: gold;
+  font-size: 2.2rem; /* ⬆️ Bigger heading */
+  margin-bottom: 15px;
+}
+
+.text-content p {
+  font-size: 1.3rem; /* ⬆️ Bigger paragraph */
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.image-content img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-left: auto;  /* Push image to the right */
+  margin-right: 0;    /* No right margin */
+  display: block;
+}
+.option-card {
+  padding-right: 0 !important; /* Remove any right padding forcibly */
+  margin-right: 0 !important;  /* Remove any right margin forcibly */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image-content {
+  margin-left: auto !important; /* Push image fully right */
+  padding: 0 !important;         /* Remove padding */
+}
+
+.image-content img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 0 !important;   /* No right margin */
+  display: block;
+}
+
+
+.quote-btn {
+  position: relative;
+  background: gold;
+  color: black;
+  padding: 10px 22px; /* slightly reduced padding */
+  font-size: 1rem;     /* ⬅️ Font size reduced */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden; /* Keeps arrow inside */
+}
+
+.quote-btn:after {
+  content: '➔';
+  position: absolute;
+  right: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease, right 0.3s ease;
+}
+
+.quote-btn:hover:after {
+  opacity: 1;
+  right: 8px;
+}
+  footer.social-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 0;
+    background: transparent; /* fully transparent */
+  }
+
+  footer.social-row a {
+    color: gold;
+    font-size: 28px;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+
+  footer.social-row a:hover {
+    transform: scale(1.2);
+  }
+
+  </style>
+</head>
+<body>
+    <div class="wa-float">
+  <a href="https://wa.me/91 86088 35915" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+    <span class="wa-text">Chat</span>
+  </a>
+</div>
+  <!-- Navigation Header -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand font-weight-bold" href="#">𝐀𝐣𝐢𝐥𝐚 𝐦𝐚𝐤𝐞𝐨𝐯𝐞𝐫</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navMenu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ml-auto">
+        <!-- Home -->
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+
+        <!-- Services Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="servicesDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Services
+          </a>
+          <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <a class="dropdown-item" href="offecrs.html">Offers</a>
+            <a class="dropdown-item" href="ad.html">Advertisement</a>
+            <a class="dropdown-item" href="salon.html">Home Service Salon</a>
+          </div>
+        </li>
+
+        <!-- Beautician Category Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="beauticianDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Beautician Category
+          </a>
+          <div class="dropdown-menu" aria-labelledby="beauticianDropdown">
+            <a class="dropdown-item" href="beauty.html">Beauty Academy</a>
+            <a class="dropdown-item" href="facial.html">Facial & Skin Care Salon</a>
+            <a class="dropdown-item" href="artist.html">Freelance Beauty Artist</a>
+            <a class="dropdown-item" href="hair.html">Hair Professional</a>
+            <a class="dropdown-item" href="makeup.html">Makeup Studio</a>
+            <a class="dropdown-item" href="mehandi.html">Mehandi Artist</a>
+            <a class="dropdown-item" href="tattoo.html">Tattoo Professional</a>
+          </div>
+        </li>
+
+        <!-- Event Category Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="eventDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            Event Category
+          </a>
+          <div class="dropdown-menu" aria-labelledby="eventDropdown">
+            <a class="dropdown-item" href="index.html">Event Gallery</a>
+            <a class="dropdown-item" href="index.html">Upcoming Training</a>
+          </div>
+        </li>
+
+        <!-- Contact -->
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Search Box -->
+  <div class="search-container">
+    <input type="text" placeholder="Search here..." id="searchInput" />
+    <span class="search-icon">&#128269;</span>
+  </div>
+
+ <section>
+  
+<section style="overflow-x: auto; padding: 40px 0; background-color: #161414c8;">
+  <div class="d-flex align-items-start" style="gap: 40px; padding: 0 60px; width: max-content;">
+    <div style="flex-shrink: 0; width: 450px; height: 500px;">
+     <video src="videos/WhatsApp Video 2025-08-12 at 9.19.10 PM.mp4"
+             controls autoplay muted
+             style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+      </video>
+    </div>
+
+
+    <!-- Image Reel (Scrollable) -->
+    <div class="d-flex" style="gap: 30px; height: 450px; overflow-x: auto;">
+
+      <img src="asstes/0663c04f-950c-4e43-8a58-c7110bff211e.jpg" alt="1"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+
+      <img src="asstes/ea22ef1c-b23a-4c4c-860e-df60acfa4df6.jpg" alt="2"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+      
+      <img src="asstes/1b737cad-1e5b-4b91-b21e-4cdb956b4422.jpg" alt="2"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+             <img src="asstes/0c8297cd-017f-4215-bcc3-44d8dc4c0642.jpg" alt="3"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+    
+      <img src="asstes/de12024b-00bb-4a39-b856-6d8aa6e751c3.jpg" alt="3"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+    
+    </div>
+  </div>
+</section>
+<section>
+      <!-- Image Reel (Scrollable) -->
+    <div class="d-flex" style="gap: 30px; height: 450px; overflow-x: auto;">
+
+      <img src="asstes/e188d248-4db0-47ca-88c9-43d3fbde3426.jpg" alt="1"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+
+      <img src="asstes/f6d42c1e-8fc6-4e92-be15-594397c131b0.jpg" alt="2"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+      <img src="asstes/02c459a1-ef1c-4c01-8109-27d439227e61.jpg" alt="3"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+      <img src="asstes/1bf90834-8fcf-4260-b024-8df0a7fde46e.jpg" alt="3"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+      <img src="asstes/f9ed3ff5-9d3b-4102-ab8d-ddd70f0ff413.jpg" alt="3"
+           style="flex-shrink: 0; width: 390px; height: 100%; border-radius: 12px; object-fit: cover;">
+    </div>
+</section>
+
+<!-- NOW PLACE WELCOME SECTION HERE 👇 -->
+<section class="welcome-section container mt-4 mb-5 p-4 rounded" style="background: #f9f0f7; border: 2px solid gold; box-shadow: 0 4px 12px rgba(214, 51, 132, 0.3);">
+  <h2 class="text-center" style="color: #d63384; font-family: 'cursive'; font-weight: bold; margin-bottom: 20px;">
+    Hello, we’re MyBeautyParlour.com!
+  <p style="font-size: 1.1rem; color: #333; line-height: 1.6; max-width: 800px; margin: 0 auto;">
+    Welcome to MyBeautyParlour.com! It's a world where beauty is all about YOU. Say goodbye to the stress of finding the perfect beautician or salon - we've got your back, right here!
+  </p>
+  <p style="font-size: 1.1rem; color: #333; line-height: 1.6; max-width: 800px; margin: 15px auto 0;">
+    We thoroughly understand that searching for that ideal place to get pampered can feel like a maze. But worry not! We're here to make it as smooth as butter. Whether you're after a glam bridal makeover or just a fresh haircut, we've got options galore.
+  </p>
+  <p style="font-size: 1.1rem; color: #333; line-height: 1.6; max-width: 800px; margin: 15px auto 0;">
+    What's more:- We're not just about finding the perfect look - we're about creating a movement. Join us in building a community of top-tier makeup and hair artists, dedicated to transforming India's flourishing beauty scene.
+  </p>
+  <p style="font-size: 1.1rem; color: #333; line-height: 1.6; max-width: 800px; margin: 15px auto 0;">
+    So, while you're here, why not explore our directory of top-notch salons and beauticians? With just a few clicks, you can book your next beauty appointment hassle-free. It's time to indulge, empower, and transform - only at MyBeautyParlour.com!
+  </p>
+</section>
+<!-- Our Services Section -->
+<section class="services-section container mt-5 mb-5">
+  <h2 class="text-center mb-4" style="color: #d63384; font-family: 'cursive'; font-weight: bold;">
+    Our Services
+  </h2>
+  <div class="row justify-content-center">
+    <!-- Service Cards -->
+    <div class="col-6 col-md-3 mb-4 text-center">
+      <div class="square-card">
+        <img src="https://mybeautyparlour.com/storage/dPltjDyN40ggAkgL.jpg" alt="Bridal">
+        <h5>Bridal Services</h5>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3 mb-4 text-center">
+      <div class="square-card">
+        <img src="https://mybeautyparlour.com/storage/TKctpALaaWFWiTWo.jpg" alt="Hair">
+        <h5>Hair Services</h5>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3 mb-4 text-center">
+      <div class="square-card">
+        <img src="https://mybeautyparlour.com/storage/8bqWut9yn49EdKbK.jpg" alt="Makeup">
+        <h5>Makeup Services</h5>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3 mb-4 text-center">
+      <div class="square-card">
+        <img src="https://mybeautyparlour.com/storage/gSNXwJpEx5H3zGY2.jpg" alt="Nails">
+        <h5>Manicure & Pedicure</h5>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3 mb-4 text-center">
+      <div class="square-card">
+        <img src="https://mybeautyparlour.com/storage/6PqJ5WTpUC6A8U3Q.jpg" alt="Massage">
+        <h5>Massage Services</h5>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3 mb-4 text-center">
+      <div class="square-card">
+        <img src="https://mybeautyparlour.com/storage/VSrQGiyQZqSkgFpp.jpg" alt="Mehandi">
+        <h5>Mehandi Services</h5>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3 mb-4 text-center">
+      <div class="square-card">
+        <img src="https://mybeautyparlour.com/storage/5Ojgco7kOia4pnrY.jpg" alt="Skin Care">
+        <h5>Skin Care Services</h5>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3 mb-4 text-center">
+      <div class="square-card">
+        <img src="https://mybeautyparlour.com/storage/6DDqz9IIJXLtrt1N.jpg" alt="Tattoo">
+        <h5>Tattoo Services</h5>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="how-work-section container text-center my-5">
+  <h2 style="color: #d63384; font-family: cursive; font-weight: bold; margin-bottom: 30px;">
+    How Do We Work
+  </h2>
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="hw-card">
+        <img src="https://mybeautyparlour.com/assets/frontend/images/location.gif" alt="Pick Your Location" class="hw-icon" />
+        <h5>Pick Your Location</h5>
+        <p>Choose your area to see nearby salons.</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="hw-card">
+        <img src="https://mybeautyparlour.com/assets/frontend/images/select.gif" alt="Select Your Service" class="hw-icon" />
+        <h5>Select Your Service</h5>
+        <p>Browse and compare the services you love.</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="hw-card">
+        <img src="https://mybeautyparlour.com/assets/frontend/images/appointment.gif" alt="Book Your Appointment" class="hw-icon" />
+        <h5>Book Your Appointment</h5>
+        <p>Contact direct or book online with ease.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bridal-options-section container my-5">
+  <h2 class="section-title text-center mb-4">Bridal Makeup Options for Every Occasion</h2>
+
+  <div class="row">
+    <!-- Card 1 -->
+    <div class="col-md-6 mb-4">
+      <div class="option-card">
+        <div class="text-content">
+          <h5>South Indian Bridal</h5>
+          <p>Traditional elegance with temple jewellery and silk saree.</p>
+          <button class="quote-btn">Get a Free Quote</button>
+        </div>
+        <div class="image-content">
+          <img src="https://www.saybridalstudio.in/assets/images/bridal/south-indian-bridal.webp" alt="South Indian Bridal">
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="col-md-6 mb-4">
+      <div class="option-card">
+        <div class="text-content">
+          <h5>Brahmin Bridal</h5>
+          <p>Graceful yet modern, for an understated traditional vibe.</p>
+          <button class="quote-btn">Get a Free Quote</button>
+        </div>
+        <div class="image-content">
+          <img src="https://www.saybridalstudio.in/assets/images/bridal/brahmin-bridal.webp" alt="Brahmin Bridal">
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="col-md-6 mb-4">
+      <div class="option-card">
+        <div class="text-content">
+          <h5>Christian Bridal</h5>
+          <p>Soft glam with glowing eyes and natural radiance.</p>
+          <button class="quote-btn">Get a Free Quote</button>
+        </div>
+        <div class="image-content">
+          <img src="https://www.saybridalstudio.in/assets/images/bridal/christian-bridal.webp" alt="Christian Bridal">
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="col-md-6 mb-4">
+      <div class="option-card">
+        <div class="text-content">
+          <h5>Muslim Bridal</h5>
+          <p>Elegant and modest style, perfect for your special day.</p>
+          <button class="quote-btn">Get a Free Quote</button>
+        </div>
+        <div class="image-content">
+          <img src="https://www.saybridalstudio.in/assets/images/bridal/muslim-bridal.webp" alt="Muslim Bridal">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <!-- Social Footer -->
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <footer class="social-row">
+  <a href="#"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://www.instagram.com/ajila.makeover/"><i class="fab fa-instagram"></i></a>
+  <a href="#"><i class="fab fa-facebook"></i></a>
+  <a href="#"><i class="fab fa-twitter"></i></a>
+</footer>
+
+</section>
+  <!-- Bootstrap JS + jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  const videos = [
+    "https://www.rdcollege.in/images/RD%20National%20College%20of%20Arts%20and%20Science%20_%20Erode.mp4",
+    "https://dl.dropboxusercontent.com/scl/fi/nrxy7484f6ur1l34xlb9z/reelsvideo.io_1749105317245.mp4?rlkey=bmc2blzv4cdsxn8vm17i8j6xs&st=bxxzh7mc", 
+    "https://dl.dropboxusercontent.com/scl/fi/y2hd3052yblwgwes8tbys/reelsvideo.io_1749106970109.mp4?rlkey=zynefskwq065y7e2d2kmszonw&st=zlkgaeke",
+    "https://dl.dropboxusercontent.com/scl/fi/97ti739f64llw8qge20w5/reelsvideo.io_1749105236155.mp4?rlkey=gn836w4ozg5i2i7kko15fathn&st=fh04jhqh",
+    "https://dl.dropboxusercontent.com/scl/fi/j37eppz3aa2arpwkjv9mw/reelsvideo.io_1749105179224.mp4?rlkey=vohneod0gtbkj5hdo0f3bg5fr&st=q3gbk536",
+    "https://dl.dropboxusercontent.com/scl/fi/af3iaq1hesqjcg6gsy5ch/reelsvideo.io_1749106894991.mp4?rlkey=aepzrhsx0qy0vnvddoxh1fkdi&st=dteheng9",
+    "https://dl.dropboxusercontent.com/scl/fi/2n46bk0iwzyb0cllb9ly7/reelsvideo.io_1749111199492.mp4?rlkey=hups6plw65lv1uwkomlgfude5&st=y8c9g05u"
+  ];
+
+  let currentIndex = 0;
+
+  const carousel = document.getElementById('carousel');
+  const addButton = document.getElementById('btn-add');    // Next
+  const removeButton = document.getElementById('btn-remove');  // Previous
+
+  const videoCard = document.createElement('div');
+  videoCard.classList.add('video-card');
+  carousel.appendChild(videoCard);
+
+  function updateVideo() {
+    const videoUrl = videos[currentIndex];
+    videoCard.innerHTML = ''; // Clear previous video
+
+    const videoElement = document.createElement('video');
+    videoElement.src = videoUrl;
+    videoElement.controls = true;
+    videoElement.autoplay = true;
+    videoElement.muted = false;
+    videoElement.style.width = '100%';
+    videoElement.style.height = '100%';
+    videoElement.style.borderRadius = '20px';
+    videoElement.style.objectFit = 'cover';
+
+    videoElement.addEventListener('loadedmetadata', () => {
+      videoElement.play();
+    });
+
+    videoCard.appendChild(videoElement);
+  }
+
+  addButton.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % videos.length;
+    updateVideo();
+  });
+
+  removeButton.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+    updateVideo();
+  });
+
+  // Load first video on page load
+  updateVideo();
+</script>
+
+</body>
+</html>

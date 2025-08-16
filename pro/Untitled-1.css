@@ -1,0 +1,47 @@
+ /* Login card */
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .login-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-card h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #d63384;
+      font-weight: bold;
+    }
+    .form-label {
+      font-weight: 500;
+    }
+    .btn-primary {
+      background-color: #d63384;
+      border: none;
+      font-weight: bold;
+    }
+    .btn-primary:hover {
+      background-color: gold;
+      color: black;
+    }
+    .forgot-link {
+      display: block;
+      text-align: right;
+      margin-top: 5px;
+      font-size: 0.9rem;
+    }
+    .signup-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .signup-link a {
+      font-weight: bold;
+      color: #d63384;
+    }
